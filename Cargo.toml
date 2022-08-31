@@ -1,0 +1,43 @@
+[package]
+name = "social-backend"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+socials_core = { git = "https://github.com/worlddeleteRin/socials-core.git#master"}
+tokio = { version = "1.19.2", features = ["full"] }
+mongodb = "2.3.0"
+futures = "0.3.21"
+serde = "1.0.139"
+serde_json = "1.0"
+serde_repr = "0.1"
+# warp = "0.3"
+axum = "0.5.15"
+tower = "0.4.13"
+
+[dependencies.uuid]
+version = "1.1.2"
+features = [
+  "serde"
+]
+[dependencies.chrono]
+version = "0.4"
+features = [
+  "serde"
+]
+[dependencies.bson]
+version = "2.3.0"
+features = [
+  "chrono-0_4",
+  "serde_with"
+]
+[dependencies.tower-http]
+version = "0.3.4"
+features = [
+  "cors"
+]
+
+[dependencies.serde_with]
+version = "2.0.0"
