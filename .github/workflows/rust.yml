@@ -12,7 +12,7 @@ env:
 jobs:
   build:
 
-    runs-on: self-hosted
+    runs-on: rpi-green
 
     steps:
     - uses: actions/checkout@v3
