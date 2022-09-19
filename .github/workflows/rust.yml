@@ -15,12 +15,12 @@ jobs:
     runs-on: rpi-green
 
     steps:
-    - uses: actions/checkout@v3
-      with:
-        clean: false
+      - uses: actions/checkout@v3
+        with:
+          clean: false
 
-    - name: Build debug
-      run: cargo build
+      - name: Build debug
+        run: cargo build
 
 
 
