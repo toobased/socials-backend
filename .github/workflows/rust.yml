@@ -8,6 +8,7 @@ on:
 
 env:
   CARGO_TERM_COLOR: always
+  BP: /home/rin/actions-runner/_work/socials-backend/socials-backend/target/debug/social-backend
 
 jobs:
   build-backend:
@@ -15,12 +16,12 @@ jobs:
     runs-on: rpi-green
 
     steps:
-      - uses: actions/checkout@v3
-        with:
-          clean: false
+    - uses: actions/checkout@v3
+      with:
+        clean: false
 
-      - name: Build debug
-        run: cargo build
+    - name: Build debug
+      run: cargo build
 
 
 
@@ -28,14 +29,11 @@ jobs:
     needs: build-backend
     runs-on: rpi-green
 
-    env:
-      BP: /home/rin/actions-runner/_work/socials-backend/socials-backend/target/debug/social-backend
-
     steps:
-      - name: Replace fresh bin
-        run: cp -f $BP /usr/bin/social-backend
+    - name: Replace fresh bin
+      run: cp -f $BP /usr/bin/social-backend
 
-      - name: Restart service
-        run: sudo systemctl restart socials-backend
+    - name: Restart service
+      run: sudo systemctl restart socials-backend
 
 
