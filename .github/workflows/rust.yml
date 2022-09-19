@@ -8,7 +8,6 @@ on:
 
 env:
   CARGO_TERM_COLOR: always
-  BP: /home/rin/actions-runner/_work/socials-backend/socials-backend/target/debug/social-backend
 
 jobs:
   build-backend:
@@ -31,7 +30,7 @@ jobs:
 
     steps:
     - name: Replace fresh bin
-      run: cp -f $BP /usr/bin/social-backend
+      run: cp -f /home/rin/actions-runner/_work/socials-backend/socials-backend/target/debug/social-backend /usr/bin/social-backend
 
     - name: Restart service
       run: sudo systemctl restart socials-backend
