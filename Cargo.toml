@@ -6,8 +6,8 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-socials_core = { git = "https://github.com/worlddeleteRin/socials-core.git", rev="f429c8a" }
-tokio = { version = "1.19.2", features = ["full"] }
+socials_core = { git = "https://github.com/worlddeleteRin/socials-core.git", rev="aa5c324" }
+tokio = { version = "1.21.2", features = ["full"] }
 mongodb = "2.3.0"
 futures = "0.3.21"
 serde = "1.0.139"
