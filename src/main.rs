@@ -22,10 +22,14 @@ async fn main() {
 
     let app: Router = Router::new()
         .route("/", get(test_route))
+
         // tasks router
         .merge(routes::tasks::tasks_router())
         // social source router
         .merge(routes::social_source::social_source_router())
+        // bots router
+        .merge(routes::bots::bots_router())
+
         // Common middleware for all routes
         .layer(
             ServiceBuilder::new()
