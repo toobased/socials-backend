@@ -1,24 +1,33 @@
 use axum::{ routing::get, Router, Extension };
+use config::AppMode;
+use log::info;
 use socials_core::db::SocialsDb;
 use std::net::SocketAddr;
 use tower::ServiceBuilder;
 use tower_http::cors::{CorsLayer, Any};
 
 pub mod routes;
+pub mod config;
 
 #[tokio::main]
 async fn main() {
+    env_logger::try_init().ok();
+    let config = config::parse_args();
+    let mode = config.args.mode;
+    info!("USING MODE: {:#?}", mode);
+    // init db
+    let db = match mode {
+        AppMode::Dev => SocialsDb::new_test_instance().await.unwrap(),
+        AppMode::Prod => SocialsDb::new_instance().await.unwrap(),
+    };
+    // let db = SocialsDb::new_instance().await.unwrap();
+
     // init cors
     let cors = CorsLayer::new()
         .allow_headers(Any)
         .allow_methods(Any)
         .expose_headers(Any)
         .allow_origin(Any);
-
-    // init db
-    // TODO make be configurable as params from cli
-    let db = SocialsDb::new_test_instance().await.unwrap();
-    // let db = SocialsDb::new_instance().await.unwrap();
 
     let app: Router = Router::new()
         .route("/", get(test_route))
