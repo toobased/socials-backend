@@ -38,6 +38,8 @@ async fn main() {
         .merge(routes::social_source::social_source_router())
         // bots router
         .merge(routes::bots::bots_router())
+        // social router
+        .merge(routes::social::social_router())
 
         // Common middleware for all routes
         .layer(
