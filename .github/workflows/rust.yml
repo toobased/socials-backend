@@ -8,7 +8,7 @@ on:
 
 env:
   CARGO_TERM_COLOR: always
-  BP: /home/rin/actions-runner/_work/socials-backend/socials-backend/target/debug/social-backend 
+  BP: /home/rin/actions-runner/_work/socials-backend/socials-backend/target/debug/social-backend
 
 jobs:
   build-backend:
@@ -21,7 +21,7 @@ jobs:
         clean: false
 
     - name: Build debug
-      run: cargo build
+      run: cargo update && cargo build
 
   notify:
     needs: build-backend
