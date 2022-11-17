@@ -1,17 +1,25 @@
 use axum::{
     // extract::Path,
-    routing::get,
+    routing::{get, post},
     response::IntoResponse,
     Json, Router, Extension, extract::{Query, Path}
 };
 
 use socials_core::{db::SocialsDb, bots::{query::BotQuery, BotCreate, Bot, BotUpdate}};
 
+use self::query::CheckBotByTokenQuery;
+
+// local modules
+pub mod query;
+
 pub fn bots_router() -> Router {
     let r: Router = Router::new()
         .route("/bots/",
             get(get_bots)
             .post(create_bot)
+        )
+        .route("/bots/check_by_token",
+            post(check_by_token)
         )
         .route("/bots/:id",
             get(get_bot)
@@ -71,5 +79,15 @@ async fn create_bot(
     let b = Bot::create_from(&db, raw_bot)
         .await.unwrap();
     let res = SocialsDb::insert_one(b, db.bots()).await.unwrap();
+    Json(res)
+}
+
+async fn check_by_token(
+    Json(query): Json<CheckBotByTokenQuery>
+) -> impl IntoResponse {
+    let res = Bot::fetch_by_access_token(
+        query.platform,
+        &query.access_token
+    ).await;
     Json(res)
 }
