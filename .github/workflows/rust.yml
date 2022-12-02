@@ -11,7 +11,7 @@ env:
 jobs:
   build-backend:
 
-    runs-on: rpi-green
+    runs-on: hpgreen
 
     steps:
     - uses: actions/checkout@v3
@@ -23,7 +23,7 @@ jobs:
 
   notify:
     needs: build-backend
-    runs-on: rpi-green
+    runs-on: hpgreen
 
     steps:
     - name: Replace fresh bin
