@@ -6,6 +6,8 @@ use axum::{
 };
 use socials_core::{db::{SocialsDb, DummyQuery }, tasks::{BotTaskCreate, BotTaskQuery, BotTask}};
 
+pub mod response;
+
 pub fn tasks_router() -> Router {
     let tasks_router = Router::new()
         .route("/bots_tasks/",
@@ -63,9 +65,14 @@ async fn create_task(
     Json(new_task): Json<BotTaskCreate>
 ) -> impl IntoResponse {
     let task = BotTask::create_from(&db, new_task).await;
+    let is_valid = task.validate(&db).await;
+    if is_valid.is_err() { return Json(Err(is_valid.unwrap_err()))}
     let result = SocialsDb::insert_one(task, db.bots_tasks())
-        .await.unwrap();
-    Json(result)
+        .await;
+    match result {
+        Err(e) => Json(Err(e.into())),
+        Ok(r) =>  Json(Ok(r))
+    }
 }
 
 async fn remove_task(
